@@ -51,7 +51,35 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         // below: let it equal roundScore to display it back into roundScore
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
-        // Next player
+        // Go to next player
+       nextPlayer();
+    }
+});
+
+// allow for holding of number
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    // Add CURRENT score to GLOBAL score
+    // access the respective part of the array
+    scores[activePlayer] += roundScore;
+
+    // Update the UI
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    
+    // Check if player won the game
+    if (scores[activePlayer] >= 10) {
+        // replace player name with word winner
+        document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+        document.querySelector('.dice').style.display = 'none'; // hide dice
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active'); // remove grey so it doesn't look like the game continues
+    } else {
+    nextPlayer(); // go to next player after hold
+    }
+});
+
+function nextPlayer() {
+       // Chcek whether player has won the game
+    // Next player
         // If active player is 0, the change to next player active player 1, 
         // Otherwise, active player should become active player 0
         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
@@ -71,8 +99,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         // toggle adds to the class if its not there, if it is there, it removes it
         document.querySelector('.player-0-panel').classList.toggle('active');
         document.querySelector('.player-1-panel').classList.toggle('active');
-
+        
         // Hide dice when we hit a 1
         document.querySelector('.dice').style.display = 'none';
-    }
-});
+}
