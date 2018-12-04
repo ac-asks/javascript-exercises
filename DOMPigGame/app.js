@@ -13,7 +13,7 @@ var scores, roundScore, activePlayer;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 1;// keeps track of player currently playing
+activePlayer = 0;// keeps track of player currently playing
 
 
 // method to select element from our webpage
@@ -43,9 +43,36 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     // Make display visible (we hid it above) - bring sttyle back to css block
     diceDOM.style.display = 'block';
     diceDOM.src = 'dice-' + dice + '.png'; // display respective dice image
-    
-
 
     // 3 Update the round score IF the rolled number was NOT a 1
+    if (dice !== 1) {
+        //Add score
+        roundScore += dice;
+        // below: let it equal roundScore to display it back into roundScore
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    } else {
+        // Next player
+        // If active player is 0, the change to next player active player 1, 
+        // Otherwise, active player should become active player 0
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        roundScore = 0;
 
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+
+        // change grey panel to ACTIVE PLAYER
+        // This REMOVES AND ADDS A CLASS FROM ONE HTML PART TO ANOTHER
+        // pass in the class that we want to remove i.e. active
+        //
+        // document.querySelector('.player-0-panel').classList.remove('active');
+        // document.querySelector('.player-1-panel').classList.add('active');
+
+        // SO THERE IS ACTUALLY A METHOD CALLED TOGGLE THAT HANDLES ALL OF THIS FOR US
+        // toggle adds to the class if its not there, if it is there, it removes it
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+
+        // Hide dice when we hit a 1
+        document.querySelector('.dice').style.display = 'none';
+    }
 });
