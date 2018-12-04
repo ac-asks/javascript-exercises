@@ -11,9 +11,8 @@ GAME RULES:
 
 var scores, roundScore, activePlayer;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;// keeps track of player currently playing
+// initialise game by calling function
+init();
 
 
 // method to select element from our webpage
@@ -25,12 +24,6 @@ activePlayer = 0;// keeps track of player currently playing
 // Reads value / content of the element and store into variable x
 //THIS IS A GETTER
 //var x = document.querySelector('#score-0').textContent;
-
-document.querySelector('.dice').style.display = 'none'; // to select class use a .
-document.getElementById('score-0').textContent = '0'; // default score to 0
-document.getElementById('score-1').textContent = '0'; // default score to 0
-document.getElementById('current-0').textContent = '0'; // default score to 0
-document.getElementById('current-1').textContent = '0'; // default score to 0
 
 // make click cause dice roll
 document.querySelector('.btn-roll').addEventListener('click', function() {
@@ -102,4 +95,35 @@ function nextPlayer() {
         
         // Hide dice when we hit a 1
         document.querySelector('.dice').style.display = 'none';
+}
+
+// init passed into the event listener argument
+document.querySelector('.btn-new').addEventListener('click', init);
+
+// initialises game
+function init() {
+    // reset players scores
+    scores = [0, 0];
+    activePlayer = 0; // player 0 starts
+    roundScore = 0; // reset round score
+
+    document.querySelector('.dice').style.display = 'none'; // to select class use a .
+    document.getElementById('score-0').textContent = '0'; // default score to 0
+    document.getElementById('score-1').textContent = '0'; // default score to 0
+    document.getElementById('current-0').textContent = '0'; // default score to 0
+    document.getElementById('current-1').textContent = '0'; // default score to 0
+
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner'); // remove winner text
+      
+    document.querySelector('.player-1-panel').classList.remove('active');
+    
+    // IN THIS ORDER TO ENSURE THERE IS NO DOUBLE-UP IN ADDING ACTIVE CLASS
+    document.querySelector('.player-0-panel').classList.remove('active'); // remove active player grey background
+    document.querySelector('.player-0-panel').classList.add('active'); // set first player as active player
+
+ 
+
 }
