@@ -13,6 +13,20 @@ var scores, roundScore, activePlayer, dice;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 0;
+activePlayer = 1;// keeps track of player currently playing
 
-dice = 6;
+// get random dice number (floor removes the decimals)
+dice = Math.floor(Math.random() * 6) + 1;
+
+// method to select element from our webpage
+//THIS IS A SETTER
+document.querySelector('#current-' + activePlayer).textContent = dice;// css uses hash symbol to select ids
+// textContent changes the text in this element
+//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
+
+// Reads value / content of the element and store into variable x
+//THIS IS A GETTER
+var x = document.querySelector('#score-0').textContent;
+console.log(x);
+
+document.querySelector('.dice').style.display = 'none'; // to select class use a .
